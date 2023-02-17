@@ -14,11 +14,15 @@ var score;
 var playerImage; // Declare a variable to hold the player image
 var backgroundImage;
 var groundImage;
+var upperPipeImage;
+var lowerPipeImage;
 
 function preload() {
   playerImage = loadImage('flappybird.png'); // Load the player image
   backgroundImage = loadImage('flappybackground.png');
   groundImage = loadImage('flappyground.png');
+  upperPipeImage = loadImage('upperpipe.png');
+  lowerPipeImage = loadImage('lowerpipe.png');
 }
 
 function setup() {
@@ -88,8 +92,13 @@ function draw() {
     var obstacle1 = createSprite(camera.position.x + width, 50, 30, gap);
     var obstacle2 = createSprite(camera.position.x + width, height - 50, 30, height - gap);
 
-    obstacle1.shapeColor = "green";
-    obstacle2.shapeColor = "green";
+    upperPipeImage.resize(30, gap);
+    lowerPipeImage.resize(30, height - gap);
+
+    // obstacle1.shapeColor = "green";
+    // obstacle2.shapeColor = "green";
+    obstacle1.addImage(upperPipeImage);
+    obstacle2.addImage(lowerPipeImage);
 
     obstacle1.depth = 0;
     obstacle2.depth = 0;
