@@ -17,12 +17,18 @@ var groundImage;
 var upperPipeImage;
 var lowerPipeImage;
 
+let pointSound;
+
 function preload() {
   playerImage = loadImage('flappybird.png'); // Load the player image
   backgroundImage = loadImage('flappybackground.png');
   groundImage = loadImage('flappyground.png');
   upperPipeImage = loadImage('upperpipe.png');
   lowerPipeImage = loadImage('lowerpipe.png');
+
+  pointSound = loadSound('point.mp3');
+  wingSound = loadSound('wing.mp3');
+  hitSound = loadSound('hit.mp3');
 }
 
 function setup() {
@@ -72,6 +78,7 @@ function draw() {
 
   if (keyDown(UP_ARROW)) {
     player.velocity.y = JUMP;
+    wingSound.play();
   }
 
   player.position.x = player.position.x + 5;
@@ -88,17 +95,20 @@ function draw() {
 
   // Generates obstacles
   if (frameCount % 60 === 0) {
-    var gap = random(100, 500); // the height of the gap
-    var obstacle1 = createSprite(camera.position.x + width, 50, 30, gap);
-    var obstacle2 = createSprite(camera.position.x + width, height - 50, 30, height - gap);
+    var gap = 100;
+    var obstacle1Y = random(0, gap);
+    var obstacle2Y = obstacle1Y + height - 100;
 
-    upperPipeImage.resize(60, 300);
-    lowerPipeImage.resize(60, 300);
+    var obstacle1 = createSprite(camera.position.x + width, obstacle1Y, 30, 100);
+    var obstacle2 = createSprite(camera.position.x + width, obstacle2Y, 30, 100);
+
+    upperPipeImage.resize(70, 250);
+    lowerPipeImage.resize(70, 250);
 
     obstacle1.shapeColor = "green";
     obstacle2.shapeColor = "green";
-    // obstacle1.addImage(upperPipeImage);
-    // obstacle2.addImage(lowerPipeImage);
+    obstacle1.addImage(upperPipeImage);
+    obstacle2.addImage(lowerPipeImage);
 
     obstacle1.depth = 0;
     obstacle2.depth = 0;
@@ -119,11 +129,11 @@ function draw() {
 for (var i = 0; i < obstacleSprites.length; i++) {
   var obstacle = obstacleSprites.get(i);
   if (obstacle.position.x < player.position.x && obstacle.passed !== true) {
-    obstacle.passed = true; // set a flag to indicate that the obstacle has been passed
+    obstacle.passed = true;
     score += 0.5; // increase the score
+    pointSound.play();
   }
 }
-
   textAlign(CENTER);
   text(score, camera.position.x, 10);
   }
@@ -131,6 +141,7 @@ for (var i = 0; i < obstacleSprites.length; i++) {
 
 function endGame() {
   isGameOver = true;
+  hitSound.play();
 }
 
 function mouseClicked() {
