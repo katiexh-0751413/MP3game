@@ -92,13 +92,13 @@ function draw() {
     var obstacle1 = createSprite(camera.position.x + width, 50, 30, gap);
     var obstacle2 = createSprite(camera.position.x + width, height - 50, 30, height - gap);
 
-    upperPipeImage.resize(30, gap);
-    lowerPipeImage.resize(30, height - gap);
+    upperPipeImage.resize(60, 300);
+    lowerPipeImage.resize(60, 300);
 
-    // obstacle1.shapeColor = "green";
-    // obstacle2.shapeColor = "green";
-    obstacle1.addImage(upperPipeImage);
-    obstacle2.addImage(lowerPipeImage);
+    obstacle1.shapeColor = "green";
+    obstacle2.shapeColor = "green";
+    // obstacle1.addImage(upperPipeImage);
+    // obstacle2.addImage(lowerPipeImage);
 
     obstacle1.depth = 0;
     obstacle2.depth = 0;
